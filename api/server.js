@@ -1,9 +1,17 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const userRoute = require("./routes/userRoute");
+const conservationRoute = require("./routes/conservationRoute");
+const gigRoute = require("./routes/gigRoute");
+const messageRoute = require("./routes/messageRoute");
+const reviewRoute = require("./routes/reviewRoute");
+const orderRoute = require("./routes/orderRoute");
+const authRoute = require("./routes/authRoute");
 
 const app = express();
 dotenv.config();
+app.use(express.json());
 
 const db = async () => {
   await mongoose
@@ -18,6 +26,13 @@ const db = async () => {
       console.log(err);
     });
 };
+app.use("/api/auth", authRoute);
+app.use("/api/user", userRoute);
+app.use("/api/gig", gigRoute);
+app.use("/api/order", orderRoute);
+app.use("/api/message", messageRoute);
+app.use("/api/conservation", conservationRoute);
+app.use("/api/review", reviewRoute);
 
 const PORT = 8800;
 

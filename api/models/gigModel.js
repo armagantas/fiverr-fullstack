@@ -67,5 +67,4 @@ const gigSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-
-export default mongoose.model("Gig", gigSchema);
+module.exports = mongoose.model("Gig", gigSchema);
