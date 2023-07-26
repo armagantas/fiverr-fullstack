@@ -36,6 +36,13 @@ app.use("/api/message", messageRoute);
 app.use("/api/conservation", conservationRoute);
 app.use("/api/review", reviewRoute);
 
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.status || "Something went wrong";
+
+  return res.status(errorStatus).send(errorMessage);
+});
+
 const PORT = 8800;
 
 app.listen(PORT, () => {

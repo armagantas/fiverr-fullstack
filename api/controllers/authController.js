@@ -1,8 +1,9 @@
 const userSchema = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const createError = require("../utils/createError");
 
-const userRegister = async (req, res) => {
+const userRegister = async (req, res, next) => {
   try {
     const { username, email, password, country } = req.body;
 
@@ -21,7 +22,7 @@ const userRegister = async (req, res) => {
       message: "User has been created.",
     });
   } catch (error) {
-    res.status(500).json({ message: error.message });
+    next(error);
   }
 };
 
@@ -54,7 +55,18 @@ const userLogin = async (req, res) => {
   }
 };
 
+const userLogout = (req, res) => {
+  res
+    .clearCookie("accessToken", {
+      sameSite: "none",
+      secure: true,
+    })
+    .status(200)
+    .send("User has been logged out");
+};
+
 module.exports = {
   userRegister,
   userLogin,
+  userLogout,
 };
