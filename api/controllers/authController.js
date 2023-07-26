@@ -49,6 +49,10 @@ const userLogin = async (req, res) => {
 
     res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
       user,
+      username: user.username,
+      id: user._id,
+      isSeller: user.isSeller,
+      email: user.email,
     });
   } catch (err) {
     res.status(500).json({ message: err.message });
