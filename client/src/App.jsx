@@ -12,6 +12,7 @@ import Message from "./pages/message/Message";
 import "./app.scss";
 import Gigs from "./pages/gigs/Gigs";
 import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 function App() {
   const Layout = () => {
     return (
@@ -63,6 +64,10 @@ function App() {
         {
           path: "/login",
           element: <Login />,
+        },
+        {
+          path: "/register",
+          element: <Register />,
         },
       ],
     },

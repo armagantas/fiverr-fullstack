@@ -5,15 +5,14 @@ const createError = require("../utils/createError");
 
 const userRegister = async (req, res, next) => {
   try {
-    const { username, email, password, country } = req.body;
+    const { username, email, password, country, img, isSeller, desc } =
+      req.body;
 
     const passwordHash = await bcrypt.hash(password, 12);
 
     const newUser = await userSchema.create({
-      username,
-      email,
-      password: passwordHash,
-      country,
+      password: password.hash,
+      ...req.body,
     });
 
     res.status(201).json({
