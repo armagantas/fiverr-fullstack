@@ -1,5 +1,6 @@
 const userSchema = require("../models/userModel");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 const userRegister = async (req, res) => {
   try {
@@ -36,7 +37,16 @@ const userLogin = async (req, res) => {
     if (!passwordCompare)
       return res.status(500).json({ message: "Passwords don't match" });
 
-    res.status(200).json({
+    const token = await jwt.sign(
+      {
+        id: user._id,
+        isSeller: user.isSeller,
+      },
+      process.env.SECRET_KEY,
+      { expiresIn: "1h" }
+    );
+
+    res.cookie("accessToken", token, { httpOnly: true }).status(200).json({
       user,
     });
   } catch (err) {
