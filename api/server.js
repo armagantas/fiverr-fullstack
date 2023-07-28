@@ -38,6 +38,11 @@ app.use("/api/message", messageRoute);
 app.use("/api/conservation", conservationRoute);
 app.use("/api/review", reviewRoute);
 
+app.use((req, res, next) => {
+  console.log(req.body);
+  next();
+});
+
 app.use((err, req, res, next) => {
   const errorStatus = err.status || 500;
   const errorMessage = err.status || "Something went wrong";

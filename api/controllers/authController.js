@@ -11,8 +11,13 @@ const userRegister = async (req, res, next) => {
     const passwordHash = await bcrypt.hash(password, 12);
 
     const newUser = await userSchema.create({
-      password: password.hash,
-      ...req.body,
+      password: passwordHash,
+      username: username,
+      email: email,
+      country: country,
+      img: img,
+      isSeller: isSeller,
+      desc: desc,
     });
 
     res.status(201).json({
@@ -21,7 +26,7 @@ const userRegister = async (req, res, next) => {
       message: "User has been created.",
     });
   } catch (error) {
-    next(error);
+    res.status(500).json({ message: error.message });
   }
 };
 

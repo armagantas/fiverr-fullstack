@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./Register.scss";
 import upload from "../../utils/upload";
 import newRequest from "../../utils/newRequest";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [file, setFile] = useState(null);
@@ -14,6 +15,8 @@ const Register = () => {
     isSeller: false,
     desc: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setUser((prev) => {
@@ -35,7 +38,7 @@ const Register = () => {
         ...user,
         img: url,
       });
-      //navigate("/");
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
