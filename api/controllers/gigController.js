@@ -28,6 +28,14 @@ const createGig = async (req, res) => {
 
 const deleteGig = async (req, res) => {
   try {
+    const gig = await gigModel.findById(req.params.id);
+
+    if (gig.userId !== req.userId)
+      return res.status(403).json("You can delete only your gig");
+
+    await gigModel.findByIdAndDelete(req.params.id);
+
+    res.status(200).send("Gig has been deleted");
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
@@ -35,6 +43,9 @@ const deleteGig = async (req, res) => {
 
 const getGig = async (req, res) => {
   try {
+    const gig = await gigModel.findById(req.params.id);
+    if (!gig) return res.status(404).json("Gig not found");
+    res.status(200).send(gig);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
