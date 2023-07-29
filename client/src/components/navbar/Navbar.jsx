@@ -39,7 +39,7 @@ const Navbar = () => {
     <div className={active || pathname !== "/" ? "navbar active" : "navbar"}>
       <div className="container">
         <div className="logo">
-          <Link to="/" className="link">
+          <Link className="link" to="/">
             <span className="text">fiverr</span>
           </Link>
           <span className="dot">.</span>
@@ -48,19 +48,14 @@ const Navbar = () => {
           <span>Fiverr Business</span>
           <span>Explore</span>
           <span>English</span>
-          <span>Sign in</span>
-          {!currentUser?.isSeller && <span>Become a seller</span>}
-          {!currentUser && <button>Join</button>}
-          {currentUser && (
+          {!currentUser?.isSeller && <span>Become a Seller</span>}
+          {currentUser ? (
             <div className="user" onClick={() => setOpen(!open)}>
-              <img
-                src={currentUser.img || "../public/img/noavatar.jpg"}
-                alt=""
-              />
+              <img src={currentUser.img || "/img/noavatar.jpg"} alt="" />
               <span>{currentUser?.username}</span>
               {open && (
                 <div className="options">
-                  {currentUser?.isSeller && (
+                  {currentUser.isSeller && (
                     <>
                       <Link className="link" to="/mygigs">
                         Gigs
@@ -82,39 +77,53 @@ const Navbar = () => {
                 </div>
               )}
             </div>
+          ) : (
+            <>
+              <Link to="/login" className="link">
+                Sign in
+              </Link>
+              <Link className="link" to="/register">
+                <button>Join</button>
+              </Link>
+            </>
           )}
         </div>
       </div>
-      {active ||
-        (pathname !== "/" && (
-          <>
-            <hr />
-            <div className="menu">
-              <Link className="link menuLink" to="/">
-                Graphics & Design
-              </Link>
-              <Link className="link" to="/">
-                Video & Animation
-              </Link>
-              <Link className="link" to="/">
-                Writing & Transition
-              </Link>
-              <Link className="link" to="/">
-                AI Services
-              </Link>
-              <Link className="link" to="/">
-                Digital Marketing
-              </Link>
-              <Link className="link" to="/">
-                Music & Audio
-              </Link>
-              <Link className="link" to="/">
-                Programming & Tech
-              </Link>
-            </div>
-            <hr />
-          </>
-        ))}
+      {(active || pathname !== "/") && (
+        <>
+          <hr />
+          <div className="menu">
+            <Link className="link menuLink" to="/">
+              Graphics & Design
+            </Link>
+            <Link className="link menuLink" to="/">
+              Video & Animation
+            </Link>
+            <Link className="link menuLink" to="/">
+              Writing & Translation
+            </Link>
+            <Link className="link menuLink" to="/">
+              AI Services
+            </Link>
+            <Link className="link menuLink" to="/">
+              Digital Marketing
+            </Link>
+            <Link className="link menuLink" to="/">
+              Music & Audio
+            </Link>
+            <Link className="link menuLink" to="/">
+              Programming & Tech
+            </Link>
+            <Link className="link menuLink" to="/">
+              Business
+            </Link>
+            <Link className="link menuLink" to="/">
+              Lifestyle
+            </Link>
+          </div>
+          <hr />
+        </>
+      )}
     </div>
   );
 };

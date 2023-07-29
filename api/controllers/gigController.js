@@ -62,7 +62,8 @@ const getGigs = async (req, res) => {
     ...(q.search && { title: { $regex: q.search, $options: "i" } }),
   };
   try {
-    const gigs = await gigModel.find(filters);
+    const gigs = await gigModel.find(filters).sort({ [q.sort]: -1 });
+
     res.status(200).json(gigs);
   } catch (error) {
     res.status(500).json({ message: error.message });
