@@ -52,7 +52,18 @@ const getGig = async (req, res) => {
 };
 
 const getGigs = async (req, res) => {
+  const q = req.query;
+  const filters = {
+    ...(q.userId && { userId: q.userId }),
+    ...(q.cat && { cat: q.cat }),
+    ...((q.min || q.max) && {
+      price: { ...(q.min && { $gte: q.min }), ...(q.max && { $lte: q.max }) },
+    }),
+    ...(q.search && { title: { $regex: q.search, $options: "i" } }),
+  };
   try {
+    const gigs = await gigModel.find(filters);
+    res.status(200).json(gigs);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

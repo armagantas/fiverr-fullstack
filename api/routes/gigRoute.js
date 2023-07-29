@@ -12,5 +12,6 @@ const router = express.Router();
 router.post("/createGig", verifyToken, createGig);
 router.delete("/deleteGig/:id", verifyToken, deleteGig);
 router.get("/getGig/:id", verifyToken, getGig);
+router.get("/getGigs", verifyToken, getGigs);
 
 module.exports = router;
